@@ -355,6 +355,15 @@
             async function Generate(type) {//encode("dsfs").length
 
                 if(online_status != 'no_connection' && this_chid != undefined){
+                    if(type == 'as_ai'){
+                        var textareaText = $("#send_textarea").val();
+                        var message = name2+":"+textareaText+"\n";
+                        $("#send_textarea").val('');
+                        chat[chat.length] = message;
+                        addOneMessage(message);
+                        saveChat();
+                        return;
+		    }
                     if(type != 'regenerate'){
                         var textareaText = $("#send_textarea").val();
                         $("#send_textarea").val('');
@@ -1236,6 +1245,11 @@
                     Generate('regenerate');
                 }
             });
+            $( "#option_say_as_ai" ).click(function() {
+                if(is_send_press == false){
+                    Generate('as_ai');
+                }
+            });
             $( "#option_delete_mes" ).click(function() {
                 if(this_chid != undefined && !is_send_press){
                     $('#dialogue_del_mes').css('display','block');
@@ -1641,6 +1655,7 @@
                         <hr>
                         <a id="option_delete_mes"><img src="img/del_mes.png" width="20" height="20">Delete message</a>
                         <a id="option_regenerate"><img src="img/regenerate.png" width="20" height="20">Regenerate</a>
+                        <a id="option_say_as_ai">Say as the character</a>
                         </div>
                     </div>
                 </div>
